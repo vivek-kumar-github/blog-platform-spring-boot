@@ -1,0 +1,44 @@
+HELP.md
+target/
+out/
+.mvn/wrapper/maven-wrapper.jar
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# Allow the Maven Wrapper JAR to be committed so the app can build anywhere
+!**/.mvn/wrapper/maven-wrapper.jar
+
+# Ignore nested target/build folders if they appear, but keep source code intact
+!**/src/main/**/target/
+!**/src/test/**/target/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+# Local database files
+*.mv.db
+*.trace.db
+
+### IntelliJ IDEA ###
+.idea
+.idea/
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
