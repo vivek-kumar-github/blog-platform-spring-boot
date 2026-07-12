@@ -3,6 +3,7 @@ package com.blogplatform.simple_blog_platform.service;
 import com.blogplatform.simple_blog_platform.model.Post;
 import com.blogplatform.simple_blog_platform.repository.PostRepository;
 import org.springframework.stereotype.Service;
+import java.time.LocalDateTime;
 
 import java.util.List;
 
@@ -21,5 +22,12 @@ public class PostService {
 
     public Post findPostById(Long id) {
         return postRepository.findById(id).orElseThrow(() -> new RuntimeException("Post not found with id: " + id));
+    }
+
+    public Post savePost(Post post) {
+        if (post.getId() == null) {
+            post.setCreatedAt(LocalDateTime.now());
+        }
+        return postRepository.save(post);
     }
 }
