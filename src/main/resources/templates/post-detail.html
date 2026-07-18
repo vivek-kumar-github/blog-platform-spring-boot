@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title th:text="${post.title}">Post Title</title>
+</head>
+
+<body>
+
+  <article>
+
+    <h1 th:text="${post.title}">Post title goes here...</h1>
+
+    <p><em>Posted on <span th:text="${#temporals.format(post.createdAt, 'dd MMMM, yyyy')}">18 July, 2026</span></em></p>
+
+    <div th:utext="${post.content}">
+      <p>This is where the full content of the blog post will appear</p>
+    </div>
+
+  </article>
+
+  <hr>
+
+  <section>
+    <h2>Comments</h2>
+
+    <div th:if="${!post.comments.isEmpty()}">
+
+      <div th:each="comment : ${post.comments}" style="margin-bottom: 20px; border-left: 2px solid #ccc; padding-left: 15px;">
+
+        <p th:text="${comment.content}">This is a comment.</p>
+
+        <small>
+          Comment by: <strong th:text="${comment.user != null ? comment.user.username : 'Anonymous'}">Username</strong>
+          on <span th:text="${#temporals.format(comment.createdAt, 'dd MMMM, yyyy')}">Date</span>
+        </small>
+
+      </div>
+
+    </div>
+
+    <div th:if="${post.comments.isEmpty()}">
+      <p>No comments yet. Be the first to share your thoughts!</p>
+    </div>
+
+  </section>
+
+</body>
+
+</html>
