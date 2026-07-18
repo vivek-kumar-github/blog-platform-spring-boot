@@ -5,6 +5,7 @@ import com.blogplatform.simple_blog_platform.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -25,6 +26,16 @@ public class PostController {
         model.addAttribute("posts", allPosts);
 
         return "home";
+    }
+
+    @GetMapping("/posts/{id}")
+    public String showPostDetailPage(@PathVariable Long id, Model model) {
+
+        Post post = postService.findPostById(id);
+
+        model.addAttribute("post", post);
+
+        return "post-detail";
     }
 
 }
