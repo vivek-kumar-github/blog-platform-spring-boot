@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
   <meta charset="UTF-8">
@@ -23,11 +23,13 @@
   <hr>
 
   <section>
+
     <h2>Comments</h2>
 
     <div th:if="${!post.comments.isEmpty()}">
 
-      <div th:each="comment : ${post.comments}" style="margin-bottom: 20px; border-left: 2px solid #ccc; padding-left: 15px;">
+      <div th:each="comment : ${post.comments}"
+        style="margin-bottom: 20px; border-left: 2px solid #ccc; padding-left: 15px;">
 
         <p th:text="${comment.content}">This is a comment.</p>
 
@@ -42,6 +44,37 @@
 
     <div th:if="${post.comments.isEmpty()}">
       <p>No comments yet. Be the first to share your thoughts!</p>
+    </div>
+
+  </section>
+
+  <hr>
+
+  <section>
+
+    <h3>Leave a comment</h3>
+
+    <div sec:authorize="isAuthenticated()">
+
+      <form th:action="@{/posts/{postId}/comments(postId=${post.id})}" th:object="${newComment}" method="post">
+        <div>
+          <label for="comment-content">Your comment:</label>
+        </div>
+
+        <div>
+          <textarea id="comment-content" th:field="*{content}" rows="5" cols="50" required></textarea>
+        </div>
+
+        <div>
+          <button type="submit">Submit Comment</button>
+        </div>
+      </form>
+    </div>
+
+    <div sec:authorize="isAnonymous()">
+      <p>
+        <a th:href="@{/login}">Log in</a> to leave a comment
+      </p>
     </div>
 
   </section>

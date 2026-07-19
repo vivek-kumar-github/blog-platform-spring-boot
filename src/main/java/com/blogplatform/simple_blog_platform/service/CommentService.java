@@ -1,6 +1,12 @@
 package com.blogplatform.simple_blog_platform.service;
 
+import com.blogplatform.simple_blog_platform.dto.CommentDto;
+import com.blogplatform.simple_blog_platform.model.Post;
+import com.blogplatform.simple_blog_platform.model.User;
 import com.blogplatform.simple_blog_platform.repository.CommentRepository;
+import com.blogplatform.simple_blog_platform.repository.PostRepository;
+import com.blogplatform.simple_blog_platform.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import com.blogplatform.simple_blog_platform.model.Comment;
 
@@ -10,14 +16,29 @@ import java.time.LocalDateTime;
 public class CommentService {
 
     private final CommentRepository commentRepository;
+    private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
-    public CommentService(CommentRepository commentRepository) {
+    public CommentService(CommentRepository commentRepository, PostRepository postRepository, UserRepository userRepository) {
         this.commentRepository = commentRepository;
+        this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
-    public Comment saveComment(Comment comment) {
-        comment.setCreatedAt(LocalDateTime.now());
+    @Transactional
+    public void saveComment(Long postId, String username, CommentDto commentDto) {
 
-        return commentRepository.save(comment);
+        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("Post not found with ID: " + postId));
+
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("User not found eith username: " + username));
+
+        Comment comment = new Comment();
+
+        comment.setContent(commentDto.getContent());
+        comment.setCreatedAt(LocalDateTime.now());
+        comment.setUser(user);
+        comment.setPost(post);
+
+        commentRepository.save(comment);
     }
 }
