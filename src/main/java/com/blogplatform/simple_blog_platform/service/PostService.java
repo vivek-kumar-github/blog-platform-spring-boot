@@ -37,9 +37,18 @@ public class PostService {
 
             post.setUser(author);
             post.setCreatedAt(LocalDateTime.now());
+
+            return postRepository.save(post);
+        } else {
+
+            Post existingPost = postRepository.findById(post.getId()).orElseThrow(() -> new IllegalArgumentException("Post not found with id: " + post.getId()));
+
+            existingPost.setTitle(post.getTitle());
+            existingPost.setContent(post.getContent());
+
+            return postRepository.save(existingPost);
         }
 
-        return postRepository.save(post);
     }
 
     public void deletePostById(Long id) {
