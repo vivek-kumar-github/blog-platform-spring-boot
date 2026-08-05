@@ -4,10 +4,7 @@ import com.blogplatform.simple_blog_platform.model.Post;
 import com.blogplatform.simple_blog_platform.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -50,6 +47,16 @@ public class AdminController {
         postService.savePost(post, username);
 
         return "redirect:/admin/posts";
+    }
+
+    @GetMapping("/posts/edit/{id}")
+    public String showEditPostForm(@PathVariable Long id, Model model) {
+
+        Post post = postService.findPostById(id);
+
+        model.addAttribute("post", post);
+
+        return "admin/post-form";
     }
 
 }
