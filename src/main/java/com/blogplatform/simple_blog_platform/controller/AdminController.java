@@ -19,7 +19,7 @@ public class AdminController {
         this.postService = postService;
     }
 
-    @GetMapping
+    @GetMapping("/posts")
     public String showPostListDashboard(Model model) {
 
         List<Post> allPost = postService.findAllPosts();
@@ -27,6 +27,16 @@ public class AdminController {
         model.addAttribute("posts", allPost);
 
         return "admin/list-posts";
+    }
+
+    @GetMapping("/posts/new")
+    public String showNewPostForm(Model model) {
+
+        Post post = new Post();
+
+        model.addAttribute("post", post);
+
+        return "admin/post-form";
     }
 
 }
