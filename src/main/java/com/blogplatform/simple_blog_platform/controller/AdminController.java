@@ -5,8 +5,11 @@ import com.blogplatform.simple_blog_platform.service.PostService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -37,6 +40,16 @@ public class AdminController {
         model.addAttribute("post", post);
 
         return "admin/post-form";
+    }
+
+    @PostMapping("/posts")
+    public String savePost(@ModelAttribute("post") Post post, Principal principal) {
+
+        String username = principal.getName();
+
+        postService.savePost(post, username);
+
+        return "redirect:/admin/posts";
     }
 
 }

@@ -1,7 +1,10 @@
 package com.blogplatform.simple_blog_platform.service;
 
 import com.blogplatform.simple_blog_platform.model.Post;
+import com.blogplatform.simple_blog_platform.model.User;
 import com.blogplatform.simple_blog_platform.repository.PostRepository;
+import com.blogplatform.simple_blog_platform.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
@@ -11,9 +14,11 @@ import java.util.List;
 public class PostService {
 
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
-    public PostService(PostRepository postRepository) {
+    public PostService(PostRepository postRepository, UserRepository userRepository) {
         this.postRepository = postRepository;
+        this.userRepository = userRepository;
     }
 
     public List<Post> findAllPosts() {
@@ -24,10 +29,16 @@ public class PostService {
         return postRepository.findById(id).orElseThrow(() -> new RuntimeException("Post not found with id: " + id));
     }
 
-    public Post savePost(Post post) {
+    @Transactional
+    public Post savePost(Post post, String username) {
+
         if (post.getId() == null) {
+            User author = userRepository.findByUsername(username).orElseThrow(() -> new IllegalStateException("Cannot find user with username " + username));
+
+            post.setUser(author);
             post.setCreatedAt(LocalDateTime.now());
         }
+
         return postRepository.save(post);
     }
 
