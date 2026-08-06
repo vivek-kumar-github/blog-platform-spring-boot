@@ -1,5 +1,6 @@
 package com.blogplatform.simple_blog_platform.service;
 
+import com.blogplatform.simple_blog_platform.exception.ResourceNotFoundException;
 import com.blogplatform.simple_blog_platform.model.Post;
 import com.blogplatform.simple_blog_platform.model.User;
 import com.blogplatform.simple_blog_platform.repository.PostRepository;
@@ -41,7 +42,7 @@ public class PostService {
             return postRepository.save(post);
         } else {
 
-            Post existingPost = postRepository.findById(post.getId()).orElseThrow(() -> new IllegalArgumentException("Post not found with id: " + post.getId()));
+            Post existingPost = postRepository.findById(post.getId()).orElseThrow(() -> new ResourceNotFoundException("Post not found with id: " + post.getId()));
 
             existingPost.setTitle(post.getTitle());
             existingPost.setContent(post.getContent());

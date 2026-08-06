@@ -1,6 +1,7 @@
 package com.blogplatform.simple_blog_platform.service;
 
 import com.blogplatform.simple_blog_platform.dto.CommentDto;
+import com.blogplatform.simple_blog_platform.exception.ResourceNotFoundException;
 import com.blogplatform.simple_blog_platform.model.Post;
 import com.blogplatform.simple_blog_platform.model.User;
 import com.blogplatform.simple_blog_platform.repository.CommentRepository;
@@ -28,9 +29,9 @@ public class CommentService {
     @Transactional
     public void saveComment(Long postId, String username, CommentDto commentDto) {
 
-        Post post = postRepository.findById(postId).orElseThrow(() -> new IllegalArgumentException("Post not found with ID: " + postId));
+        Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Post not found with ID: " + postId));
 
-        User user = userRepository.findByUsername(username).orElseThrow(() -> new IllegalArgumentException("User not found eith username: " + username));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new ResourceNotFoundException("User not found eith username: " + username));
 
         Comment comment = new Comment();
 
