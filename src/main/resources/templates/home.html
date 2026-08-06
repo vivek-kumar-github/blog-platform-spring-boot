@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -7,23 +7,37 @@
 </head>
 
 <body>
-    <h1>Welcome to Bloggy!</h1>
 
-    <div th:if="${!posts.isEmpty()}">
-        <h2>Recent Posts</h2>
-        <ul>
-            <li th:each="post : ${posts}">
-                <a th:href="@{/posts/{id}(id=${post.id})}">
-                    <h2 th:text="${post.title}">Post Title</h2>
-                </a>
-                <p th:text="${post.content}">Post content will go here...</p>
-            </li>
-        </ul>
-    </div>
+    <main>
 
-    <div th:if="${posts.isEmpty()}">
-        <p>No posts have been published yet. Check back soon!</p>
-    </div>
+        <h1>Latest Posts</h1>
+
+        <div th:if="${postPage.hasContent()}">
+
+            <article th:each="post : ${postPage.content}">
+
+                <h2>
+                    <a th:href="@{/posts/{id}(id=${post.id})}" th:text="${post.title}">Post Title</a>
+                </h2>
+
+                <p th:text="${#strings.abbreviate(post.content, 250)}">Post content snippet...</p>
+
+                <div>
+                    <small>
+                        Posted by <span th:text="${post.user.username}">Author</span>
+                        on <span th:text="${#temporals.format(post.createdAt, 'dd-MMM-yyyy')}">Date</span>
+                    </small>
+                </div>
+
+            </article>
+
+        </div>
+
+        <div th:if="${!postPage.hasContent()}">
+            <p>No posts have been published yet. Check back soon!</p>
+        </div>
+
+    </main>
 
 </body>
 
