@@ -28,12 +28,16 @@ public class PostService {
         return postRepository.findAll(pageable);
     }
 
+    public List<Post> findAllPosts() {
+        return postRepository.findAll();
+    }
+
     public Page<Post> searchByTitle(String keyword, Pageable pageable) {
         return postRepository.findByTitleContainingIgnoreCase(keyword, pageable);
     }
 
     public Post findPostById(Long id) {
-        return postRepository.findById(id).orElseThrow(() -> new RuntimeException("Post not found with id: " + id));
+        return postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post not found with id: " + id));
     }
 
     @Transactional
