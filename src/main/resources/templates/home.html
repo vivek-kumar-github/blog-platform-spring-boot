@@ -10,6 +10,28 @@
             font-family: sans-serif;
         }
 
+        .search-form-container {
+            margin-bottom: 30px;
+        }
+        .search-form-container input[type="text"] {
+            padding: 8px;
+            width: 70%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .search-form-container button {
+            padding: 9px 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .pagination-container {
+            margin-top: 40px;
+            text-align: center;
+        }
+
         .pagination-container {
             margin-top: 40px;
             text-align: center;
@@ -62,6 +84,16 @@
     <main>
 
         <h1>Latest Posts</h1>
+
+        <div class="search-form-container">
+
+            <form th:action="@{/}" method="get">
+
+                <input type="text" name="keyword" th:value="${param.keyword}" placeholder="Search by title..."/>
+                <button type="submit">Search</button>
+                
+            </form>
+        </div>
 
         <div th:if="${postPage.hasContent()}">
 
