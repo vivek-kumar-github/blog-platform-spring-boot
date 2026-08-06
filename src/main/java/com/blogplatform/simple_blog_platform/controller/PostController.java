@@ -5,6 +5,10 @@ import com.blogplatform.simple_blog_platform.model.Post;
 import com.blogplatform.simple_blog_platform.service.CommentService;
 import com.blogplatform.simple_blog_platform.service.PostService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,11 +32,11 @@ public class PostController {
     }
 
     @GetMapping
-    public String showHomePage(Model model) {
+    public String showHomePage(Model model, @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        List<Post> allPosts = postService.findAllPosts();
+        Page<Post> postPage = postService.findAllPosts(pageable);
 
-        model.addAttribute("posts", allPosts);
+        model.addAttribute("postPage", postPage);
 
         return "home";
     }

@@ -6,6 +6,8 @@ import com.blogplatform.simple_blog_platform.model.User;
 import com.blogplatform.simple_blog_platform.repository.PostRepository;
 import com.blogplatform.simple_blog_platform.repository.UserRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 
@@ -22,8 +24,8 @@ public class PostService {
         this.userRepository = userRepository;
     }
 
-    public List<Post> findAllPosts() {
-        return postRepository.findAll();
+    public Page<Post> findAllPosts(Pageable pageable) {
+        return postRepository.findAll(pageable);
     }
 
     public Post findPostById(Long id) {
