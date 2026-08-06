@@ -67,6 +67,8 @@ public class PostController {
 
             model.addAttribute("post", post);
 
+            model.addAttribute("newComment", commentDto);
+
             return "post-detail";
         }
         String username = principal.getName();
