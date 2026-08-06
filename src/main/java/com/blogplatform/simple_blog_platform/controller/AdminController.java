@@ -2,6 +2,7 @@ package com.blogplatform.simple_blog_platform.controller;
 
 import com.blogplatform.simple_blog_platform.model.Post;
 import com.blogplatform.simple_blog_platform.service.PostService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class AdminController {
     }
 
     @PostMapping("/posts")
-    public String savePost(@ModelAttribute("post") Post post, Principal principal) {
+    public String savePost(@Valid @ModelAttribute("post") Post post, Principal principal) {
 
         String username = principal.getName();
 
