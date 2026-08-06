@@ -65,8 +65,9 @@
 
           <textarea id="comment-content" th:field="*{content}" rows="5" cols="50" required></textarea>
 
-          <div style="color: red; font-size: 0.9em; margin-top: 5px;" th:if="${#fields.hasError('content')}" th:errors="*{content}">Comment Error</div>
-          
+          <div style="color: red; font-size: 0.9em; margin-top: 5px;" th:if="${#fields.hasError('content')}"
+            th:errors="*{content}">Comment Error</div>
+
         </div>
 
         <div>

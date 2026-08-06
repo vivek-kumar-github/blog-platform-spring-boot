@@ -72,9 +72,11 @@
         <div class="form-group">
             <label for="content">Content</label>
 
-            <textarea th:field="*{content}" id="content" placeholder="Write your post content here..." required></textarea>
+            <textarea th:field="*{content}" id="content" placeholder="Write your post content here..."
+                required></textarea>
 
-            <span class="error-message" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content Error</span>
+            <span class="error-message" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Content
+                Error</span>
         </div>
 
         <div class="form-group">
