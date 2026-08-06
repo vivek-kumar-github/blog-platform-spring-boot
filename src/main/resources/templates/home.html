@@ -121,29 +121,30 @@
         </div>
 
         <nav aria-label="Pagination" th:if="${postPage.totalPages > 1}" class="pagination-container">
-
             <ul class="pagination">
 
                 <li th:classappend="${postPage.isFirst()} ? 'disabled' : ''">
-                    <a th:href="${!postPage.isFirst()} ? @{/(page=${postPage.number - 1})} : '#'">
+
+                    <a th:href="${!postPage.isFirst()} ? @{/(page=${postPage.number - 1}, keyword=${keyword})} : '#'">
                         &laquo; Previous
                     </a>
                 </li>
 
-
                 <li th:each="pageNum : ${#numbers.sequence(0, postPage.totalPages - 1)}"
                     th:classappend="${pageNum == postPage.number} ? 'active' : ''">
 
-                    <a th:href="@{/(page=${pageNum})}" th:text="${pageNum + 1}"></a>
+                    <a th:href="@{/(page=${pageNum}, keyword=${keyword})}" th:text="${pageNum + 1}"></a>
                 </li>
 
                 <li th:classappend="${postPage.isLast()} ? 'disabled' : ''">
-                    <a th:href="${!postPage.isLast()} ? @{/(page=${postPage.number + 1})} : '#'">
+                   
+                    <a th:href="${!postPage.isLast()} ? @{/(page=${postPage.number + 1}, keyword=${keyword})} : '#'">
                         Next &raquo;
                     </a>
                 </li>
             </ul>
         </nav>
+
     </main>
 
 </body>

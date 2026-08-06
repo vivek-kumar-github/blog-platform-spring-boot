@@ -12,10 +12,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
@@ -32,9 +29,18 @@ public class PostController {
     }
 
     @GetMapping
-    public String showHomePage(Model model, @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String showHomePage(Model model, @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
 
-        Page<Post> postPage = postService.findAllPosts(pageable);
+        Page<Post> postPage;
+
+        if (keyword != null && !keyword.isBlank()) {
+
+            postPage = postService.searchByTitle(keyword, pageable);
+
+            model.addAttribute("keyword", keyword);
+        } else {
+            postPage = postService.findAllPosts(pageable);
+        }
 
         model.addAttribute("postPage", postPage);
 
