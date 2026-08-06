@@ -59,4 +59,12 @@ public class AdminController {
         return "admin/post-form";
     }
 
+    @PostMapping("/posts/delete/{id}")
+    public String deletePost(@PathVariable Long id) {
+
+        postService.deletePostById(id);
+
+        return "redirect:/admin/posts";
+    }
+
 }
