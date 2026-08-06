@@ -5,6 +5,7 @@ import com.blogplatform.simple_blog_platform.service.PostService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -41,8 +42,11 @@ public class AdminController {
     }
 
     @PostMapping("/posts")
-    public String savePost(@Valid @ModelAttribute("post") Post post, Principal principal) {
+    public String savePost(@Valid @ModelAttribute("post") Post post, BindingResult bindingResult, Principal principal) {
 
+        if (bindingResult.hasErrors()) {
+            return "admin/post-form";
+        }
         String username = principal.getName();
 
         postService.savePost(post, username);

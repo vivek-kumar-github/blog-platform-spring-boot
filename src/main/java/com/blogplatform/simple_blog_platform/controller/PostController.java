@@ -7,6 +7,7 @@ import com.blogplatform.simple_blog_platform.service.PostService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -49,8 +50,15 @@ public class PostController {
     }
 
     @PostMapping("/posts/{postId}/comments")
-    public String submitComment(@PathVariable Long postId, @Valid @ModelAttribute("newComment") CommentDto commentDto, Principal principal) {
+    public String submitComment(@PathVariable Long postId, @Valid @ModelAttribute("newComment") CommentDto commentDto, BindingResult bindingResult, Principal principal, Model model) {
 
+        if (bindingResult.hasErrors()) {
+            Post post = postService.findPostById(postId);
+
+            model.addAttribute("post", post);
+
+            return "post-detail";
+        }
         String username = principal.getName();
 
         commentService.saveComment(postId, username, commentDto);
