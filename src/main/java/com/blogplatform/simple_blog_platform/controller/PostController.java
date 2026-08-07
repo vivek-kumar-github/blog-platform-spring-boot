@@ -28,7 +28,7 @@ public class PostController {
         this.commentService = commentService;
     }
 
-    @GetMapping
+    @GetMapping({"/", "/posts"})
     public String showHomePage(Model model, @PageableDefault(size = 5, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, @RequestParam(value = "keyword", required = false) String keyword) {
 
         Page<Post> postPage;
@@ -66,6 +66,8 @@ public class PostController {
             Post post = postService.findPostById(postId);
 
             model.addAttribute("post", post);
+
+            model.addAttribute("newComment", commentDto);
 
             return "post-detail";
         }
