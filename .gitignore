@@ -45,3 +45,4 @@ build/
 
 application.properties
 application-prod.properties
+codebase.txt
