@@ -63,8 +63,8 @@ This method uses the embedded H2 in-memory database, which is perfect for quick 
 
 1.  **Clone the repository:**
     ```bash
-    git clone <your-repository-url>
-    cd simple-blog-platform
+    git clone https://github.com/vivek-kumar-github/blog-platform-spring-boot.git
+    cd blog-platform-spring-boot
     ```
 
 2.  **Run the application using the Maven wrapper:**
@@ -104,13 +104,13 @@ This method uses Docker to run the application in a container and connects to a 
 4.  **Build the Docker image:**
     - Use the provided `Dockerfile` to create a Docker image.
     ```bash
-    docker build -t simple-blog-platform .
+    docker build -t blog-platform-spring-boot .
     ```
 
 5.  **Run the Docker container:**
     - Run the image as a container, mapping the port and activating the `prod` profile.
     ```bash
-    docker run -p 3000:3000 -e "SPRING_PROFILES_ACTIVE=prod" --name blog-app simple-blog-platform
+    docker run -p 3000:3000 -e "SPRING_PROFILES_ACTIVE=prod" --name blog-app blog-platform-spring-boot
     ```
     - **`-p 3000:3000`**: Maps port 3000 on your host machine to port 3000 in the container.
     - **`-e "SPRING_PROFILES_ACTIVE=prod"`**: Sets the environment variable to activate the `prod` Spring profile, which makes the application use your `application-prod.properties` file and connect to MySQL.
