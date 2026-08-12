@@ -26,7 +26,7 @@ This project serves as a comprehensive example of building a full-stack applicat
 ## Technology Stack
 
 - **Backend:**
-  - Java 17
+  - Java 21
   - Spring Boot 3.x
   - Spring MVC (for web controllers)
   - Spring Data JPA (for database interaction)
@@ -46,7 +46,7 @@ This project serves as a comprehensive example of building a full-stack applicat
 
 ## Prerequisites
 
-- Java JDK 17 or later
+- Java JDK 21 or later
 - Apache Maven 3.6 or later
 - Docker (for running in production mode)
 - A running MySQL instance (for running in production mode)
