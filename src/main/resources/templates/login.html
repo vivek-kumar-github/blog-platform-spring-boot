@@ -21,6 +21,9 @@
                 <div th:if="${param.logout}" class="alert alert-success py-2" role="alert">
                     You have been logged out.
                 </div>
+                <div th:if="${param.expired}" class="alert alert-warning py-2" role="alert">
+                    Your session expired. Please log in and try again.
+                </div>
                 <div th:if="${registrationSuccess}" class="alert alert-success py-2" role="alert">
                     <p class="m-0" th:text="${registrationSuccess}"></p>
                 </div>
