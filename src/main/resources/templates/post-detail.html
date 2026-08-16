@@ -13,6 +13,7 @@
     }
 
     .post-content {
+      white-space: pre-line;
       line-height: 1.8;
       font-size: 1.1rem;
     }
@@ -39,7 +40,7 @@
               th:text="${#temporals.format(post.createdAt, 'dd MMMM, yyyy')}">Date</span></span>
         </div>
 
-        <div class="post-content text-dark" th:utext="${post.content}">
+        <div class="post-content text-dark" th:text="${post.content}">
           Full blog content goes here...
         </div>
       </div>
@@ -51,7 +52,8 @@
 
         <div th:if="${post.comments != null and !post.comments.isEmpty()}" class="d-flex flex-column gap-3">
           <div th:each="comment : ${post.comments}" class="p-3 bg-light rounded-3 border-start border-primary border-3">
-            <p class="mb-2 text-dark" th:text="${comment.content}">Comment text goes here.</p>
+            <p class="mb-2 text-dark" th:text="${comment.content}" style="white-space: pre-line;">Comment text goes
+              here.</p>
             <div class="text-muted small d-flex justify-content-between align-items-center">
               <span>By: <strong
                   th:text="${comment.user != null ? comment.user.username : 'Anonymous'}">Username</strong></span>
